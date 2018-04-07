@@ -1,7 +1,7 @@
 # HTT_kinfit <br />
 
-Standalone example of the usage of  kinematic fit class <br />
-*** this class was developed by Christian Veelken *** <br />
+Standalone example of the contruction of kinematic fit variables <br />
+*** the HadTopKinFit class was developed by Christian Veelken *** <br />
 
 to run: <br />
 
