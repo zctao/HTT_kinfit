@@ -5,7 +5,7 @@ Standalone example of the contruction of kinematic fit variables <br />
 
 to run: <br />
 
-cmsenv in any CMSSW 7X or + <br />
+cmsenv in any CMSSW 7X or + (just for the g++ and ROOT) <br />
 make call_HTT <br />
 ./call_HTT <br />
 
