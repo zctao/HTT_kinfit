@@ -9,7 +9,6 @@
 #include <iostream>
 #include <vector>
 #include "HadTopKinFit.h" // HadTopKinFit
-#include "HadTopTagger.h" // HadTopTagger
 #include <TLorentzVector.h>
 #include <TTree.h>
 #include <TFile.h>

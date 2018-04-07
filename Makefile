@@ -20,7 +20,7 @@ GCC = g++
 
 # main programs and required modules
 MAIN =  call_HTT
-MODULES = HadTopKinFit HadTopTagger
+MODULES = HadTopKinFit 
 
 # search path for modules
 
