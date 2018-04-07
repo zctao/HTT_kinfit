@@ -1,11 +1,11 @@
-# HTT_kinfit
+# HTT_kinfit <br />
 
-Standalone example of the usage of  kinematic fit class 
-*** this class was developed by Christian Veelken ***
+Standalone example of the usage of  kinematic fit class <br />
+*** this class was developed by Christian Veelken *** <br />
 
-to run:
-cmsenv in any CMSSW 7X or +
+to run: <br />
 
-make call_HTT
-./call_HTT
+cmsenv in any CMSSW 7X or + <br />
+make call_HTT <br />
+./call_HTT <br />
 
