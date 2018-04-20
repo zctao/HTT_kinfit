@@ -1,0 +1,4 @@
+<bin name="call_HTT" file="call_HTT.cc"></bin>
+<use name="HadTop/HTT_kinfit"/>
+<use name="root"/>
+<use name="gsl"/>

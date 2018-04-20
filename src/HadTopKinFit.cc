@@ -1,4 +1,4 @@
-#include "HadTopKinFit.h" // HadTopKinFit
+#include "../interface/HadTopKinFit.h" // HadTopKinFit
 
 //#include "tthAnalysis/HiggsToTauTau/interface/lutAuxFunctions.h" // loadTF1()
 

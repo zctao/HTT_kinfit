@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include "HadTopKinFit.h" // HadTopKinFit
+#include "../interface/HadTopKinFit.h" // HadTopKinFit
 #include <TLorentzVector.h>
 #include <TTree.h>
 #include <TFile.h>
@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     Double_t  jet3_py = -140.964;
     Double_t  jet3_pz = -331.144;
     Double_t  jet3_E = 486.969;
-    kinFit_ = new HadTopKinFit(1, "TF_jets.root");
+    kinFit_ = new HadTopKinFit(1, "../data/TF_jets.root");
     TLorentzVector recBJet, recWJet1, recWJet2;
     recBJet.SetPxPyPzE(jet1_px, jet1_py, jet1_pz, jet1_E);
     recWJet1.SetPxPyPzE(jet2_px, jet2_py, jet2_pz, jet2_E);

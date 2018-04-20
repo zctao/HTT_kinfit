@@ -1,0 +1,6 @@
+<use name="root"/>
+<use name="rootmath"/>
+<use name="gsl"/>
+<export>
+  <lib name="1"/>
+</export>
