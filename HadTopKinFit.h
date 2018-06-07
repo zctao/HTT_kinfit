@@ -1,7 +1,12 @@
 //#ifndef tthAnalysis_HiggsToTauTau_HadTopKinFit_h
 //#define tthAnalysis_HiggsToTauTau_HadTopKinFit_h
 
-#include <TLorentzVector.h>
+//#include <LorentzVector.h>
+
+#include <Math/LorentzVector.h>
+//#include <Math/GenVector.h>
+#include <Math/PtEtaPhiM4D.h>
+typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > LorentzVector;
 
 double square(double x);
 
@@ -57,23 +62,23 @@ public:
   //-----------------------------------------------------------------------------
   /// functions to call when using HadTopKinFit in "fit mode"
   void
-  fit(TLorentzVector recBJetP4,
-      TLorentzVector recWJet1P4,
-      TLorentzVector recWJet2P4);
+  fit(LorentzVector recBJetP4,
+      LorentzVector recWJet1P4,
+      LorentzVector recWJet2P4);
 
-  const TLorentzVector &
+  const LorentzVector &
   fittedBJet() const;
 
-  const TLorentzVector &
+  const LorentzVector &
   fittedWJet1() const;
 
-  const TLorentzVector &
+  const LorentzVector &
   fittedWJet2() const;
 
-  TLorentzVector
+  LorentzVector
   fittedTop() const;
 
-  TLorentzVector
+  LorentzVector
   fittedW() const;
 
   double
@@ -89,9 +94,9 @@ public:
   //-----------------------------------------------------------------------------
   /// functions to call when using HadTopKinFit in "integration mode"
   void
-  integrate(TLorentzVector recBJetP4,
-            TLorentzVector recWJet1P4,
-            TLorentzVector recWJet2P4);
+  integrate(LorentzVector recBJetP4,
+            LorentzVector recWJet1P4,
+            LorentzVector recWJet2P4);
 
   double
   p() const;
@@ -118,12 +123,12 @@ protected:
                 double cosAngle) const;
 
   double
-  evalTF_BJet(TLorentzVector recP4,
-              TLorentzVector fittedP4) const;
+  evalTF_BJet(LorentzVector recP4,
+              LorentzVector fittedP4) const;
 
   double
-  evalTF_lightJet(TLorentzVector recP4,
-                  TLorentzVector fittedP4) const;
+  evalTF_lightJet(LorentzVector recP4,
+                  LorentzVector fittedP4) const;
 
   int tf_mode_; // set to 0 to use hard-coded TF, set to 1 to use TF from ROOT file
   TFile * tf_file_;
@@ -132,13 +137,13 @@ protected:
   TF1 * tf_b_barrel_;
   TF1 * tf_b_endcap_;
 
-  TLorentzVector recBJetP4_;
-  TLorentzVector recWJet1P4_;
-  TLorentzVector recWJet2P4_;
+  LorentzVector recBJetP4_;
+  LorentzVector recWJet1P4_;
+  LorentzVector recWJet2P4_;
 
-  mutable TLorentzVector fittedBJetP4_;
-  mutable TLorentzVector fittedWJet1P4_;
-  mutable TLorentzVector fittedWJet2P4_;
+  mutable LorentzVector fittedBJetP4_;
+  mutable LorentzVector fittedWJet1P4_;
+  mutable LorentzVector fittedWJet2P4_;
   mutable double max_prob_;
 
   const double mTop2_;
