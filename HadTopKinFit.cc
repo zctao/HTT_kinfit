@@ -102,19 +102,18 @@ HadTopKinFit::~HadTopKinFit()
 
 void HadTopKinFit::fit(LorentzVector recBJetP4, LorentzVector recWJet1P4, LorentzVector recWJet2P4)
 {
-  std::cout << "<HadTopKinFit::fit>:" << std::endl;
-  std::cout << " recBJetP4: pT = " << recBJetP4.Pt() << ", eta = " << recBJetP4.Eta() << ","
-  	      << " phi = " << recBJetP4.Phi() << ", mass = " << recBJetP4.M() << std::endl;
+  //std::cout << "<HadTopKinFit::fit>:" << std::endl;
+  //std::cout << " recBJetP4: pT = " << recBJetP4.Pt() << ", eta = " << recBJetP4.Eta() << ","
+  //	      << " phi = " << recBJetP4.Phi() << ", mass = " << recBJetP4.M() << std::endl;
   //std::cout << " recWJet1P4: pT = " << recWJet1P4.Pt() << ", eta = " << recWJet1P4.Eta() << ","
   //	      << " phi = " << recWJet1P4.Phi() << ", mass = " << recWJet1P4.mass() << std::endl;
   //std::cout << " recWJet2P4: pT = " << recWJet2P4.Pt() << ", eta = " << recWJet2P4.Eta() << ","
   //          << " phi = " << recWJet2P4.Phi() << ", mass = " << recWJet2P4.mass() << std::endl;
   //std::cout << "reconstructed masses: W = " << (recWJet1P4 + recWJet2P4).mass() << ","
   //	      << " top = " << (recBJetP4 + recWJet1P4 + recWJet2P4).mass() << std::endl;
-  std::cout << "<HadTopKinFit::fit>:" << std::endl;
+
 //--- clear minimizer
   minimizer_->Clear();
-  std::cout << "<HadTopKinFit::fit>:" << std::endl;
 
 //--- set verbosity level of minimizer
   minimizer_->SetPrintLevel(-1);
@@ -123,7 +122,6 @@ void HadTopKinFit::fit(LorentzVector recBJetP4, LorentzVector recWJet1P4, Lorent
   recBJetP4_ = recBJetP4;
   recWJet1P4_ = recWJet1P4;
   recWJet2P4_ = recWJet2P4;
-  std::cout << "<HadTopKinFit::fit>:" << std::endl;
 
   double alpha0 = 1.;
   double min_nll = -1.;
@@ -137,7 +135,6 @@ void HadTopKinFit::fit(LorentzVector recBJetP4, LorentzVector recWJet1P4, Lorent
       min_nll = nll;
     }
   }
-  std::cout << "alpha0 = " << alpha0 << ": min_nll = " << min_nll << std::endl;
 
 //--- set interface to MINUIT
   const ROOT::Math::Functor toMinimize(objectiveFunctionAdapterMINUIT_, 1);
