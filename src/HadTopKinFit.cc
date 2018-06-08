@@ -7,13 +7,16 @@
 #include <Math/Minimizer.h> // ROOT::Math::Minimizer
 #include <TFile.h> // TFile
 #include <TF1.h> // TF1
-#include <TLorentzVector.h>
+//#include <LorentzVector.h>
 #include <TMath.h> // TMath::Pi(), TMath::IsNaN()
 
 #include <gsl/gsl_monte_vegas.h> // gsl_*
 
-using namespace hadTopKinFit;
+#include <Math/LorentzVector.h>
+#include <Math/PtEtaPhiM4D.h>
+typedef ROOT::Math::LorentzVector<ROOT::Math::PtEtaPhiM4D<double> > LorentzVector;
 
+using namespace hadTopKinFit;
 /// global pointer for interface to MINUIT
 const HadTopKinFit * HadTopKinFit::gHadTopKinFit = nullptr;
 
@@ -97,7 +100,7 @@ HadTopKinFit::~HadTopKinFit()
   delete minimizer_;
 }
 
-void HadTopKinFit::fit(TLorentzVector recBJetP4, TLorentzVector recWJet1P4, TLorentzVector recWJet2P4)
+void HadTopKinFit::fit(LorentzVector recBJetP4, LorentzVector recWJet1P4, LorentzVector recWJet2P4)
 {
   //std::cout << "<HadTopKinFit::fit>:" << std::endl;
   //std::cout << " recBJetP4: pT = " << recBJetP4.Pt() << ", eta = " << recBJetP4.Eta() << ","
@@ -108,10 +111,8 @@ void HadTopKinFit::fit(TLorentzVector recBJetP4, TLorentzVector recWJet1P4, TLor
   //          << " phi = " << recWJet2P4.Phi() << ", mass = " << recWJet2P4.mass() << std::endl;
   //std::cout << "reconstructed masses: W = " << (recWJet1P4 + recWJet2P4).mass() << ","
   //	      << " top = " << (recBJetP4 + recWJet1P4 + recWJet2P4).mass() << std::endl;
-  //std::cout << "<HadTopKinFit::fit>:" << std::endl;
 //--- clear minimizer
   minimizer_->Clear();
-  //std::cout << "<HadTopKinFit::fit>:" << std::endl;
 
 //--- set verbosity level of minimizer
   minimizer_->SetPrintLevel(-1);
@@ -120,7 +121,6 @@ void HadTopKinFit::fit(TLorentzVector recBJetP4, TLorentzVector recWJet1P4, TLor
   recBJetP4_ = recBJetP4;
   recWJet1P4_ = recWJet1P4;
   recWJet2P4_ = recWJet2P4;
-  //std::cout << "<HadTopKinFit::fit>:" << std::endl;
 
   double alpha0 = 1.;
   double min_nll = -1.;
@@ -134,7 +134,6 @@ void HadTopKinFit::fit(TLorentzVector recBJetP4, TLorentzVector recWJet1P4, TLor
       min_nll = nll;
     }
   }
-  //std::cout << "alpha0 = " << alpha0 << ": min_nll = " << min_nll << std::endl;
 
 //--- set interface to MINUIT
   const ROOT::Math::Functor toMinimize(objectiveFunctionAdapterMINUIT_, 1);
@@ -186,7 +185,7 @@ double objectiveFunctionVEGAS(double* x, size_t dim, void* params)
   return prob;
 }
 
-void HadTopKinFit::integrate(TLorentzVector recBJetP4, TLorentzVector recWJet1P4, TLorentzVector recWJet2P4)
+void HadTopKinFit::integrate(LorentzVector recBJetP4, LorentzVector recWJet1P4, LorentzVector recWJet2P4)
 {
   //std::cout << "<HadTopKinFit::integrate>:" << std::endl;
   recBJetP4_  = recBJetP4; // unused
@@ -229,7 +228,7 @@ void HadTopKinFit::integrate(TLorentzVector recBJetP4, TLorentzVector recWJet1P4
   gsl_rng_free(vegas_rnd);
 }
 
-const TLorentzVector& HadTopKinFit::fittedBJet() const
+const LorentzVector& HadTopKinFit::fittedBJet() const
 {
   if ( nll_ == -1. ){
     std::cout<< "Kinematic fit has not yet run or failed !!\n";
@@ -237,7 +236,7 @@ const TLorentzVector& HadTopKinFit::fittedBJet() const
   } else return fittedBJetP4_;
 }
 
-const TLorentzVector& HadTopKinFit::fittedWJet1() const
+const LorentzVector& HadTopKinFit::fittedWJet1() const
 {
   if ( nll_ == -1. ){
     std::cout<< "Kinematic fit has not yet run or failed !!\n";
@@ -245,7 +244,7 @@ const TLorentzVector& HadTopKinFit::fittedWJet1() const
   } else return fittedWJet1P4_;
 }
 
-const TLorentzVector& HadTopKinFit::fittedWJet2() const
+const LorentzVector& HadTopKinFit::fittedWJet2() const
 {
   if ( nll_ == -1. ){
      std::cout<< "Kinematic fit has not yet run or failed !!\n";
@@ -253,7 +252,7 @@ const TLorentzVector& HadTopKinFit::fittedWJet2() const
     } else return fittedWJet2P4_;
 }
 
-TLorentzVector HadTopKinFit::fittedTop() const
+LorentzVector HadTopKinFit::fittedTop() const
 {
   if ( nll_ == -1. ){
     std::cout<< "Kinematic fit has not yet run or failed !!\n";
@@ -261,7 +260,7 @@ TLorentzVector HadTopKinFit::fittedTop() const
   } else return fittedBJetP4_ + fittedWJet1P4_ + fittedWJet2P4_;
 }
 
-TLorentzVector HadTopKinFit::fittedW() const
+LorentzVector HadTopKinFit::fittedW() const
 {
   if ( nll_ == -1. ){
     std::cout<< "Kinematic fit has not yet run or failed !!\n";
@@ -299,7 +298,7 @@ double HadTopKinFit::pErr() const
 
 namespace
 {
-  double comp_cosAngle(TLorentzVector p1, TLorentzVector p2)
+  double comp_cosAngle(LorentzVector p1, LorentzVector p2)
   {
     double p1P = p1.P();
     double p2P = p2.P();
@@ -316,24 +315,24 @@ double HadTopKinFit::comp_prob(double alpha) const
 //--- reconstruct W -> j1 j2 decay
   double fittedWJet1P = alpha*recWJet1P4_.P();
   double fittedWJet1Pt = fittedWJet1P*sin(recWJet1P4_.Theta());
-  TLorentzVector fittedWJet1P4(fittedWJet1Pt, recWJet1P4_.Eta(), recWJet1P4_.Phi(), 0.);
+  LorentzVector fittedWJet1P4(fittedWJet1Pt, recWJet1P4_.Eta(), recWJet1P4_.Phi(), 0.);
   //dumpLorentzVector("fittedWJet1", fittedWJet1P4);
 
   double fittedWJet2P = comp_fittedP2(fittedWJet1P4.E(), fittedWJet1P4.P(), recWJet2P4_.P(), mW2_, 0., 0., comp_cosAngle(recWJet1P4_, recWJet2P4_));
   double fittedWJet2Pt = fittedWJet2P*sin(recWJet2P4_.Theta());
-  TLorentzVector fittedWJet2P4(fittedWJet2Pt, recWJet2P4_.Eta(), recWJet2P4_.Phi(), 0.);
+  LorentzVector fittedWJet2P4(fittedWJet2Pt, recWJet2P4_.Eta(), recWJet2P4_.Phi(), 0.);
   //dumpLorentzVector("fittedWJet2", fittedWJet2P4);
 
-  TLorentzVector fittedWP4 = fittedWJet1P4 + fittedWJet2P4;
+  LorentzVector fittedWP4 = fittedWJet1P4 + fittedWJet2P4;
   //dumpLorentzVector("fittedW", fittedWP4);
 
 //--- reconstruct t -> b W decay
   double fittedBJetP = comp_fittedP2(fittedWP4.E(), fittedWP4.P(), recBJetP4_.P(), mTop2_, mW2_, mB2_, comp_cosAngle(fittedWP4, recBJetP4_));
   double fittedBJetPt = fittedBJetP*sin(recBJetP4_.Theta());
-  TLorentzVector fittedBJetP4(fittedBJetPt, recBJetP4_.Eta(), recBJetP4_.Phi(), sqrt(mB2_));
+  LorentzVector fittedBJetP4(fittedBJetPt, recBJetP4_.Eta(), recBJetP4_.Phi(), sqrt(mB2_));
   //dumpLorentzVector("fittedBJetP4", fittedBJetP4);
 
-  //TLorentzVector fittedTopP4 = fittedWP4 + fittedBJetP4;
+  //LorentzVector fittedTopP4 = fittedWP4 + fittedBJetP4;
   //dumpLorentzVector("fittedTop", fittedTopP4);
 
 //--- compute goodness-of-fit
@@ -393,7 +392,7 @@ double Chi2(double x, double m, double s)
   return ( s > 0. ) ? square((x - m)/s) : 1.e+3;
 }
 
-double HadTopKinFit::evalTF_BJet(TLorentzVector recP4, TLorentzVector fittedP4) const
+double HadTopKinFit::evalTF_BJet(LorentzVector recP4, LorentzVector fittedP4) const
 {
   //std::cout << "<evalTF_BJet>:" << std::endl;
   double eta = recP4.Eta();
@@ -429,7 +428,7 @@ double HadTopKinFit::evalTF_BJet(TLorentzVector recP4, TLorentzVector fittedP4) 
   return p;
 }
 
-double HadTopKinFit::evalTF_lightJet(TLorentzVector recP4, TLorentzVector fittedP4) const
+double HadTopKinFit::evalTF_lightJet(LorentzVector recP4, LorentzVector fittedP4) const
 {
   //std::cout << "<evalTF_lightJet>:" << std::endl;
   double eta = recP4.Eta();

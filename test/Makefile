@@ -20,7 +20,7 @@ GCC = g++
 
 # main programs and required modules
 MAIN =  call_HTT
-MODULES = HadTopKinFit 
+MODULES = HadTopKinFit
 
 # search path for modules
 
@@ -50,7 +50,7 @@ CFLAGS = -ansi -O3 -Wall
 INCPATH = -I../include $(ROOTINCS) $(GSLINCS)
 
 # additional libraries to be included
-LIBS =  $(ROOTLIBS) $(GSLLIBS)
+LIBS =  $(ROOTLIBS) $(GSLLIBS)  -lGenVector
 
 ############################## do not change ###################################
 
